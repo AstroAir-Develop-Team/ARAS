@@ -1,0 +1,8 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+#define WS_VERSION ${ws_version}
+#define SOCKET_VERSION ${socket_version}
+#define ModLoader_VERSION ${modloader_version}
+
+#endif
