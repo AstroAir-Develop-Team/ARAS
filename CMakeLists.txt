@@ -102,10 +102,29 @@ set_target_properties(ModLoader PROPERTIES OUTPUT_NAME "modloader")
 set_target_properties(ModLoader PROPERTIES VERSION 1.0 SOVERSION 1)
 message("-- Libmodloader.so version is ${modloader_version}")
 
+add_library(GUI ${CMAKE_CURRENT_SOURCE_DIR}/src/core/gui.cpp 
+                ${CMAKE_CURRENT_SOURCE_DIR}/libraries/ftxui/ftxui-component.a
+                ${CMAKE_CURRENT_SOURCE_DIR}/libraries/ftxui/ftxui-dom.a
+                ${CMAKE_CURRENT_SOURCE_DIR}/libraries/ftxui/ftxui-screen.a)
+add_library(IMGUI   ${CMAKE_CURRENT_SOURCE_DIR}/includes/imgui/imgui.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/includes/imgui/imgui_draw.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/includes/imgui/imgui_tables.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/includes/imgui/imgui_widgets.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/includes/imgui/backend/imgui_impl_glfw.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/includes/imgui/backend/imgui_impl_opengl3.cpp
+    )
+target_link_libraries(GUI IMGUI)
+
 target_link_libraries(aras Ws)
 target_link_libraries(aras ModLoader)
 target_link_libraries(aras Socket)
+target_link_libraries(aras GUI)
+
 link_libraries(aras ${CMAKE_CURRENT_SOURCE_DIR}/libraries/sockpp/libsockpp.so)
 link_libraries(aras libz.so)
+link_libraries(aras PUBLIC libglfw.so)
+link_libraries(aras PUBLIC libGL.so)
+link_libraries(aras PUBLIC libdl.so)
+
 target_include_directories(aras PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/includes")
 

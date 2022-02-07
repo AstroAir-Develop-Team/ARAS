@@ -60,7 +60,7 @@ namespace ARAS
 
     WS::~WS()
     {
-
+        spdlog::info("");
     }
 
     void WS::on_open(websocketpp::connection_hdl hdl)

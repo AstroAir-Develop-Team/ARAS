@@ -1,0 +1,15 @@
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:202104-01
+    steps:
+      - checkout
+      - run:
+          name: "Check enviroment"
+          command: sudo sh scripts/cibuild.sh
+      - run:
+          name: "Build"
+          command: mkdir build && cd build
+          command: cmake -S . -B build
+

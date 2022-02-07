@@ -12,3 +12,6 @@ end
 get_version()
 
 require("")
+
+print
+local                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

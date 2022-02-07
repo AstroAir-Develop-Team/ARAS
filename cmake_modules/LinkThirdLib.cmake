@@ -7,9 +7,13 @@ else()
     message("-- Countn't Found Websocketpp Header File")
 endif()
 
-#图形界面，决定使用较为简单的IMGUI
-#add_library(Gui src/core/gui.cpp)
+#图形界面，决定使用IMGUI
+find_path(path_glfw glfw3.h /usr/include/GLFW)
+find_path(path_glfw glfw3.h /usr/local/include/GLFW)
+if(path_glfw)
+    message("-- Found GL header file in ${IMGUI_GL}")
+else()
+    message("-- Could not found GL library.You should run 'sudo apt install libglfw3-dev libgl-dev'")
+endif()
 
-#target_link_directories(Gui PUBLIC includes/imgui)
-#target_include_directories(Gui PUBLIC includes/imgui)
-#target_link_libraries(aras PUBLIC 
+
