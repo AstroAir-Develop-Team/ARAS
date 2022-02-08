@@ -39,7 +39,7 @@ jobs:
       - name: Run build-wrapper
         run: |
           echo "Run cibuild.sh & Check environment\n"
-          sudo sh cibuild.sh
+          sudo sh scripts/cibuild.sh
           echo "Run building\n"
           mkdir build
           cmake -S . -B build

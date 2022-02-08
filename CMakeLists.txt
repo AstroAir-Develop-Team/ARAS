@@ -120,7 +120,7 @@ target_link_libraries(aras ModLoader)
 target_link_libraries(aras Socket)
 target_link_libraries(aras GUI)
 
-link_libraries(aras ${CMAKE_CURRENT_SOURCE_DIR}/libraries/sockpp/libsockpp.so)
+link_libraries(aras libsockpp.so)
 link_libraries(aras libz.so)
 link_libraries(aras PUBLIC libglfw.so)
 link_libraries(aras PUBLIC libGL.so)
