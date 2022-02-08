@@ -11,6 +11,7 @@ sudo cp -R $project_path/../includes/spdlog /usr/include
 
 echo "Build sockpp"
 git clone https://github.com/fpagliughi/sockpp
+cd sockpp
 mkdir build
 cmake -DCMAKE_INSTALL_PREFIX=/usr -S . -B build
 cmake --build build/
@@ -19,6 +20,7 @@ sudo make install
 cd ../../
 
 git clone https://github.com/ArthurSonzogni/FTXUI
+cd FTXUI
 mkdir build
 cmake -DCMAKE_INSTALL_PREFIX=/usr -S . -B build
 cd build && make -j4
