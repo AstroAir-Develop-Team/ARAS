@@ -43,6 +43,9 @@ extern "C"
 
 #include <dirent.h>
 #include <vector>
+#include <cstring>
+#include <string.h>
+
 #include "io.hpp"
 
 /*所需的Lua文件信息*/
@@ -82,15 +85,15 @@ namespace ARAS
     }
 
 	/*
-     * name: SearchAllMods(const char *folder)
+     * name: SearchAllMods(std::string folder)
      * @param folder: 文件夹
      * describe: Search all mods in folder
      * 描述：搜索指定文件夹下的模组
      */
-    configor::json ModLoader::SearchAllMods(const char *folder)
+    configor::json ModLoader::SearchAllMods(std::string folder)
     {
         /*检查输入是否合理*/
-        if (folder[strlen(folder) - 1] != '/')
+        if (folder[folder.length() - 1] != '/')
 #ifdef WIN32
             folder = folder + '\\';
 #else
@@ -100,14 +103,13 @@ namespace ARAS
         //搜索指定文件夹中所有文件
         struct dirent *ptr;
         DIR *dir;
-        dir = opendir(folder);
+        dir = opendir(folder.c_str());
         std::vector<std::string> files;
         while ((ptr = readdir(dir)) != NULL)
         {
             if (ptr->d_name[0] == '.' || strcmp(ptr->d_name, "..") == 0)
                 continue;
-            int size = strlen(ptr->d_name);
-            if (strcmp((ptr->d_name + (size - 4)), ".lua") != 0)
+            if (strcmp((ptr->d_name + (strlen(ptr->d_name) - 4)), ".lua") != 0)
                 continue;
             files.push_back(ptr->d_name);
             spdlog::debug("Found {}", ptr->d_name);
@@ -165,7 +167,7 @@ namespace ARAS
         return j;
     }
 
-    bool ModLoader::ModsManager(ModsChangeCmd cmd,const char* name ,const char * target_pos = nullptr)
+    bool ModLoader::ModsManager(ModsChangeCmd cmd,std::string name ,std::string target_pos = nullptr)
     {
         bool status = false;
         switch(cmd)
@@ -178,10 +180,10 @@ namespace ARAS
         return status;
     }
 
-    configor::json SearchAllScripts(const char *folder)
+    configor::json SearchAllScripts(std::string folder)
     {
         /*检查输入是否合理*/
-        if (folder[strlen(folder) - 1] != '/')
+        if (folder[folder.length() - 1] != '/')
 #ifdef WIN32
             folder = folder + '\\';
 #else
@@ -191,14 +193,14 @@ namespace ARAS
         //搜索指定文件夹中所有脚本文件
         struct dirent *ptr;
         DIR *dir;
-        dir = opendir(folder);
+        dir = opendir(folder.c_str());
         std::vector<std::string> files;
         while ((ptr = readdir(dir)) != NULL)
         {
             if (ptr->d_name[0] == '.' || strcmp(ptr->d_name, "..") == 0)
                 continue;
-            int size = strlen(ptr->d_name);
-            if (strcmp((ptr->d_name + (size - 4)), ".lua") != 0 || strcmp((ptr->d_name + (size - 3)), ".sh") != 0 || strcmp((ptr->d_name + (size - 6)), ".shell") != 0)
+            int size = (strlen(ptr->d_name));
+            if (strcmp((ptr->d_name + (size - 4)), ".lua") != 0 || strcmp((ptr->d_name + (strlen(ptr->d_name) - 3)), ".sh") != 0 || strcmp((ptr->d_name + (size - 6)), ".shell") != 0)
                 continue;
             files.push_back(ptr->d_name);
             spdlog::debug("Found {}", ptr->d_name);
@@ -222,10 +224,10 @@ namespace ARAS
         return j;
     }
 
-    bool ModLoader::RunScript(const char * name)
+    bool ModLoader::RunScript(std::string name)
     {
         //运行Lua脚本
-        if (strcmp((name + (strlen(name) - 4)), ".lua") == 0)
+        if (strcmp((name.c_str() + (name.length() - 4)), ".lua") == 0)
         {
             lua_State *L = luaL_newstate();
             if(L == nullptr)
@@ -253,7 +255,7 @@ namespace ARAS
             return true;
         }
         //运行shell
-        if (strcmp((name + (strlen(name) - 3)), ".sh") == 0 || strcmp((name + (strlen(name) - 6)), ".shell") == 0)
+        if (strcmp((name.c_str() + (name.length() - 3)), ".sh") == 0 || strcmp((name.c_str() + (name.length() - 6)), ".shell") == 0)
         {
             std::string tmp = "scripts/",t = "sh ";
             tmp.append(name);
@@ -262,7 +264,11 @@ namespace ARAS
                 spdlog::error("{} not found",tmp);
                 return false;
             }
-            system(t.append(tmp).c_str());
+            if(system(t.append(tmp).c_str()) == -1)
+            {
+                spdlog::error("Cannot execute {}",name);
+                return false;
+            }
             spdlog::info("Run {}",name);
             return true;
         }

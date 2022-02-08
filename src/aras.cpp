@@ -37,6 +37,7 @@ Description:Main program of astroair server
 
 #include "getopt.h"
 #include <iomanip>
+#include <ctime>
 
 ServerSetting *Server_Setting;
 extern ServerSetting *Server_Setting;
@@ -185,6 +186,7 @@ namespace ARAS
         tmp << "---- AstroAir Server Crash Report ----" << std::endl << std::endl;
         /*Just for fun*/
         tmp << "/******" << std::endl;
+
         if(rand() > 5000)
             tmp << "What a pity!" << std::endl;
         else

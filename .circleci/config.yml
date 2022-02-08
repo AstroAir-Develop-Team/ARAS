@@ -9,7 +9,9 @@ jobs:
           name: "Check enviroment"
           command: sudo sh scripts/cibuild.sh
       - run:
-          name: "Build"
+          name: "Prepare"
           command: mkdir build && cd build
-          command: cmake -S . -B build
+      - run:
+          name: "Build"
+          command: cmake .. && make -j4
 

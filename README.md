@@ -1,3 +1,7 @@
+[![Build](https://github.com/AstroAir/ARAS/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/AstroAir/ARAS/actions/workflows/build.yml)
+[![CircleCI](https://circleci.com/gh/AstroAir-Develop-Team/ARAS/tree/master.svg?style=svg)](https://circleci.com/gh/AstroAir-Develop-Team/ARAS/tree/master)
+[![CodeQL](https://github.com/AstroAir-Develop-Team/ARAS/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/AstroAir-Develop-Team/ARAS/actions/workflows/codeql-analysis.yml)
+
 ## AstroAir Server
 
 <i> A New Generation of Astronomical Photography Tools </i>

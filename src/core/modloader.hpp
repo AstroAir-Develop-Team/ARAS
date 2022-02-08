@@ -58,11 +58,11 @@ namespace ARAS
         explicit ModLoader(bool debug);
         ~ModLoader();
 
-        virtual configor::json SearchAllScripts(const char * folder);
-        virtual bool RunScript(const char *name);
+        virtual configor::json SearchAllScripts(std::string folder);
+        virtual bool RunScript(std::string name);
 
-        virtual configor::json SearchAllMods(const char *folder);
-        virtual bool ModsManager(ModsChangeCmd cmd, const char *name, const char *target_pos);
+        virtual configor::json SearchAllMods(std::string folder);
+        virtual bool ModsManager(ModsChangeCmd cmd,std::string name,std::string target_pos);
 
     protected:
 
