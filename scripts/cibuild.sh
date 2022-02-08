@@ -38,5 +38,5 @@ sudo make install
 sudo cp src/liblua.a ../libraries/lua
 cd ..
 
-sudo apt install libwebsocketpp-dev libglfw3-dev libgl-dev
+sudo apt install libwebsocketpp-dev libglfw3-dev libgl-dev libboost-dev
 
